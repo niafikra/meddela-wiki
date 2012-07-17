@@ -3,4 +3,5 @@
 Feel free to browse the pages so that you can understand the power of meddela!
 
 === Contents ===
-* [[about|About **meddela**]]
+* [[about|About]]
+* [[architecture|Architecture]]
