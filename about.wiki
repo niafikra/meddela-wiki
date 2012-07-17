@@ -1,0 +1,1 @@
+**meddela** is an notification system which can send notifications based on certain conditions on the database.**meddela** is designed with fluidity so that you can send different templated notifications which can be sent primarily as SMS,email or any other notification system that you may want to use for which the plugins for notification transports can be written.
