@@ -2,6 +2,6 @@
 
 meddela in its structure consist of the following basic components
 
-* [[event_trigger|Event Trigger]]
-* [[notification_composer|Notification Composer]]
-* [[notification_transport|Notification Transport]]
+* [[trigger|Trigger]]
+* [[composer|Composer]]
+* [[transport|Transport]]
