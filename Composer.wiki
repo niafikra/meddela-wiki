@@ -1,0 +1,78 @@
+= Composer =
+
+Composer does what its name says, compose notifications.
+
+The connection between composer and trigger is that when a trigger event is satisfied it delegates the responsibility of composing notifications to the composer.
+
+To compose a notification the composer must have the following information in hand
+* the receiver
+* the data to use in composing
+* the template for the notification
+
+Since meddela was made primarily to work with SQL database, The data to be used in the notification is expected to come from an SQL database. meddela provides a mechanism for the user to specify SQL scripts to get this data from the SQL database.
+
+meddela allows more than one SQL script to be attached to a notification, however the resultsets of these scripts must have at least one common column, which will be known as the join property.
+
+To demonstrate consider we have the following tables in the database
+Person
+| id | phoneNumber | fullName     |
+| 1  | 12345       | mbwana mbura |
+| 2  | 6789        | boniface chacha |
+
+Hobbies
+| personId | hobby       |
+| 1        | programming |
+| 2        | coding      | 
+
+These tables just contain information two people and their hobbies.
+
+To demonstrate meddela's merging abilities we will try to provide the above information to meddela's commposer. Note that we could use inner joins but we use two SQL queries just to demonstrate meddela's merging capabilities
+
+The following SQL's will be used for the notification.
+{{{
+#!SQL
+SELECT id, phone, fullname FROM Person
+SELECT id AS personId, hobby FROM Hobbies
+}}}
+
+Meddela's composer will execute each of the above SQL's and store them in a collection as 
+shown below:
+
+[0]
+   [0][id: 1, fullName: mbwana mbura, phoneNumber: 12345]
+   [1][id: 2, fullName: boniface chacha, phoneNumber: 6789]
+[1]
+   [0][id: 1,  hobby: programming]
+   [1][id 2,   hobby: coding]
+
+here the collection of list of maps, with lists being the rows returned by running each SQL script, the result of each SQL script is stored in its own list. i.e the first [0] and [1]
+
+The second list is a list of maps.  When a single SQL script executes it returns a list (resultset) which is just a collection of maps(rows)!
+
+meddela composer has an ability to merge the returned results using a joining property as the common value. So for the above results if the composer was told to merge using id it will form the following results ready to send out the notifications with each result being sent out as its own notification
+
+[0][id: 1, fullName: mbwana mbura, phoneNumber: 12345, hobby: programming]
+[1][id: 2, fullName: boniface chacha, phoneNumber: 6789, hobby: coding]
+
+With the above information the composer just needs two more pieces of information to compose and send out a message. the receiver property and a message template
+
+from the above we can tell the composer that the receiver property is phoneNumber. 
+
+We can also provide a template to be used as the composer. Note meddela uses groovy's GSTring syntax to for templates. Below is an example for the template
+
+{{{
+#!groovy
+Hello $fullName seems like you like $hobby
+}}}
+
+with the above information the modifier will order the transport to send out two notifications:
+
+to: 12345
+content: Hello mbwana mbura seems like you like programming
+
+to:6789
+content: Hello boniface chacha seems like you like coding
+
+And thats all there is to know about meddela's composer!
+
+Well there is a few more: You can use a groovy script instead of SQL scripts to provide the data for meddela. The groovy script should return a collection of a collection of maps. Given that, a template, joinin property and receiver property meddela will compose a notification and send it out..
