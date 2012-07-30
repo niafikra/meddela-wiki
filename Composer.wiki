@@ -14,10 +14,12 @@ Since meddela was made primarily to work with SQL database, The data to be used 
 meddela allows more than one SQL script to be attached to a notification, however the resultsets of these scripts must have at least one common column, which will be known as the join property.
 
 To demonstrate consider we have the following tables in the database
+
 Person
 | id | phoneNumber | fullName     |
 | 1  | 12345       | mbwana mbura |
 | 2  | 6789        | boniface chacha |
+
 
 Hobbies
 | personId | hobby       |
