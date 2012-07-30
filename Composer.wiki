@@ -32,23 +32,23 @@ The following SQL's will be used for the notification.
 {{{
 #!sql
 SELECT id, phone, fullname FROM Person
-SELECT id AS personId, hobby FROM Hobbies
+SELECT personId AS id, hobby FROM Hobbies
 }}}
 
 Meddela's composer will execute each of the above SQL's and store them in a collection as 
 shown below:
-
+{{{
+#!groovy
 [0]
-
    [0][id: 1, fullName: mbwana mbura, phoneNumber: 12345]
-
    [1][id: 2, fullName: boniface chacha, phoneNumber: 6789]
 
-[1]
-   
+[1] 
    [0][id: 1,  hobby: programming]
-  
    [1][id 2,   hobby: coding]
+
+}}}
+
 
 here the collection of list of maps, with lists being the rows returned by running each SQL script, the result of each SQL script is stored in its own list. i.e the first [0] and [1]
 
@@ -56,10 +56,11 @@ The second list is a list of maps.  When a single SQL script executes it returns
 
 meddela composer has an ability to merge the returned results using a joining property as the common value. So for the above results if the composer was told to merge using id it will form the following results ready to send out the notifications with each result being sent out as its own notification
 
-
+{{{
+#!groovy
 [0][id: 1, fullName: mbwana mbura, phoneNumber: 12345, hobby: programming]
-
 [1][id: 2, fullName: boniface chacha, phoneNumber: 6789, hobby: coding]
+}}}
 
 
 With the above information the composer just needs two more pieces of information to compose and send out a message. the receiver property and a message template
