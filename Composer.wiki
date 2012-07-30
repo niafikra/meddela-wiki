@@ -30,7 +30,7 @@ To demonstrate meddela's merging abilities we will try to provide the above info
 
 The following SQL's will be used for the notification.
 {{{
-#!SQL
+#!sql
 SELECT id, phone, fullname FROM Person
 SELECT id AS personId, hobby FROM Hobbies
 }}}
@@ -39,11 +39,12 @@ Meddela's composer will execute each of the above SQL's and store them in a coll
 shown below:
 
 [0]
-   [0][id: 1, fullName: mbwana mbura, phoneNumber: 12345]
-   [1][id: 2, fullName: boniface chacha, phoneNumber: 6789]
+  - [0][id: 1, fullName: mbwana mbura, phoneNumber: 12345]
+  - [1][id: 2, fullName: boniface chacha, phoneNumber: 6789]
+
 [1]
-   [0][id: 1,  hobby: programming]
-   [1][id 2,   hobby: coding]
+  - [0][id: 1,  hobby: programming]
+  - [1][id 2,   hobby: coding]
 
 here the collection of list of maps, with lists being the rows returned by running each SQL script, the result of each SQL script is stored in its own list. i.e the first [0] and [1]
 
@@ -52,6 +53,7 @@ The second list is a list of maps.  When a single SQL script executes it returns
 meddela composer has an ability to merge the returned results using a joining property as the common value. So for the above results if the composer was told to merge using id it will form the following results ready to send out the notifications with each result being sent out as its own notification
 
 [0][id: 1, fullName: mbwana mbura, phoneNumber: 12345, hobby: programming]
+
 [1][id: 2, fullName: boniface chacha, phoneNumber: 6789, hobby: coding]
 
 With the above information the composer just needs two more pieces of information to compose and send out a message. the receiver property and a message template
@@ -75,4 +77,13 @@ content: Hello boniface chacha seems like you like coding
 
 And thats all there is to know about meddela's composer!
 
-Well there is a few more: You can use a groovy script instead of SQL scripts to provide the data for meddela. The groovy script should return a collection of a collection of maps. Given that, a template, joinin property and receiver property meddela will compose a notification and send it out..
+Well there is a few more: You can use a groovy script instead of SQL scripts to provide the data for meddela. The groovy script should return a collection of a collection of maps. Given that, a template, joining property and receiver property meddela will compose a notification and send it out..
+
+Also all meddela scripts will be given the following variables which they can use 
+* todaysDate
+* firstDayOfMonth
+* lastDayOfMonth
+
+to use the above in SQL scripts you must prefix them with a $ sign
+
+groovy scripts get a bonus variable sql which is an Sql object that has already been connected to datasource
