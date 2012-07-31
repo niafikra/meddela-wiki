@@ -1,0 +1,18 @@
+= Trigger =
+A trigger is considered to be something that causes another thing to occur. Since meddela is about notifications then a trigger is something that causes a notification to be sent out.
+
+Meddela was created primarly to deal with SQL databases, but since it allows groovy scripting you can deal with almost anything!
+
+For a trigger to occur to things two must be fullfilled:
+* A certain time condition is reached
+* A certain state of the database is reached or a certain groovy script condition is reached
+
+Meddela uses cron4j for scheduling of triggers, thus the time condition information for meddela is expressed as a CRON string
+
+When a time condition occurs meddela will run either a SQL script or a Groovy script attached to that trigger. If the SQL script returns a resultset which is not empty then meddela knows its time to send out a notification. If a groovy script is used instead and it returns a true value, then meddela knows its time to send out a notification
+
+So to summarise, a trigger in meddela has schedule information, and either a SQL script to run or a Groovy Script to run.
+
+One more thing is added to the trigger, a datasource i.e information on how to connect to a database to run the SQL Script. 
+
+Trigger =  CRON schedule + sql or groovy script + datasource
