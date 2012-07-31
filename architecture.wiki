@@ -2,7 +2,7 @@
 
 meddela in its structure consist of the following basic components
 
-* [[trigger|trigger]]
-* [[composer|composer]]
-* [[transport|transport]]
+* [[Trigger|Trigger]]
+* [[Composer|Composer]]
+* [[Transport|Transport]]
 *[[UI|uI]]
