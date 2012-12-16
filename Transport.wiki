@@ -1,7 +1,9 @@
 = Transport =
 
-The transport does the actual delivery of the notifications. meddela is doesn't really care how a notification is delivered thus it only declares a interface transport which when given content should deliver it to the specified recepient.
+The transport does the actual delivery of the notifications. meddela doesn't really care how a notification is delivered thus it only declares a interface transport which when given content should deliver it to the specified recepient.
 
 By default medella uses the console transport which simply displays the notifications on the console.
 
 Different implementations of transport can be written so that notifications can be sent out as SMS, email, RSS feeds e.t.c
+
+niafikra have a proprietary SMS transport plugin written of which can be used to deliver these notifications as SMS
